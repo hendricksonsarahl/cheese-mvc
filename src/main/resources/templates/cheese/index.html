@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<h1>These are some of my favorite vegan cheeses!</h1>
+
+<!-- we want thymeleaf to repeat each element (li tag) for each cheese in cheeses insert the text that is the value of the iterator -->
+
+<ul>
+
+    <li th:each="cheese : ${cheeses}" th:text="${cheese}"></li>
+</ul>
+
+</body>
+</html>
