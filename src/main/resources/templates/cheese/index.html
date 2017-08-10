@@ -2,12 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title th:text="${title}">Title</title>
 </head>
 <body>
-<h1>These are some of my favorite vegan cheeses!</h1>
+<h1 th:text="${title}">Default Title</h1>
 
+<p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
 <!-- we want thymeleaf to repeat each element (li tag) for each cheese in cheeses insert the text that is the value of the iterator -->
+
+<a href="/cheese/add"> Add more cheese!</a>
 
 <ul>
 
