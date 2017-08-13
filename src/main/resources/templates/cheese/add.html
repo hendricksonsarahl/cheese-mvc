@@ -10,8 +10,8 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <form method="post">
-    <input name = "cheeseName" placeholder="Cheese name" />
-    <textarea name="cheeseDesc" placeholder="Description"></textarea>
+    <input name = "cheeseName" placeholder="Cheese name" pattern="[A-Za-z\s]+" title="Please enter a name using letters and spaces only" required="required" />
+    <textarea name="cheeseDesc" placeholder="Description" title="Describe your cheese if you wish"></textarea>
     <input type="submit" value="Add Cheese" />
 </form>
 
