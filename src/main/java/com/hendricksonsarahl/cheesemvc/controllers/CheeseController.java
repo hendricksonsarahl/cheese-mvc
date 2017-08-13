@@ -61,6 +61,7 @@ public class CheeseController {
                 cheeses.remove(cheeseName);
             }
         }
+        // Redirect to cheesy root
         return "redirect:";
     }
 
