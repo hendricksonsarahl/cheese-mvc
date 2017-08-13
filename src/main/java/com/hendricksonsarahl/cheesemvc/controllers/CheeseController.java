@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Sarah Hendrickson @hendricksonsarahl
@@ -43,4 +44,24 @@ public class CheeseController {
         // Redirect to cheesy root
         return "redirect:";
     }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String displayRemoveCheeseForm(Model model) {
+        model.addAttribute("cheeses", cheeses);
+        model.addAttribute("title", "Remove Cheeses");
+        return "cheese/remove";
+
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveCheeseForm(@RequestParam String removeCheese) {
+        for (Map.Entry<String, String> cheeseToRemove : cheeses.entrySet()) {
+            String cheeseName = cheeseToRemove.getKey();
+            if (cheeseName.contains(removeCheese)) {
+                cheeses.remove(cheeseName);
+            }
+        }
+        return "redirect:";
+    }
+
 }
