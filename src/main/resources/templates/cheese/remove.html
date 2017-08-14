@@ -13,9 +13,11 @@
     <p th:unless="${cheeses} and ${cheeses.size()}">No cheese :(</p>
 
     <label>I want to remove
-        <select name="removeCheese">
-            <option th:each="cheese : ${cheeses}" th:text="${cheese.key}">Test Value</option>
-        </select>
+        <div th:each="cheese : ${cheeses}" class="checkbox">
+            <input type="checkbox" name="cheeseIds" th:value="${cheese.cheeseId}" th:id="${cheese.cheeseId}"/>
+            <label th:for="${cheese.cheeseId}" th:text="${cheese.name}"></label>
+            <br />
+        </div>
         from my list of cheeses
     </label>
     <input type="submit" value="Remove Cheese"/>

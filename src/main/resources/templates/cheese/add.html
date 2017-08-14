@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8" />
-    <title th:text="${title}">Title</title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+<body class="container">
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method="post">
-    <input name = "cheeseName" placeholder="Cheese name" pattern="[A-Za-z\s]+" title="Please enter a name using letters and spaces only" required="required" />
-    <textarea name="cheeseDesc" placeholder="Description" title="Describe your cheese if you wish"></textarea>
+<form method="post" style="max-width:600px;" th:object="${cheese}">
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}" pattern="[A-Za-z\s]+" title="enter a name using letters and spaces only" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="description">Description</label>
+        <textarea class="form-control" th:field="*{description}"></textarea>
+        <span th:errors="*{description}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="type">Type</label>
+        <select th:field="*{type}">
+            <option th:each="cheeseType : ${cheeseTypes}"
+                    th:text="${cheeseType.name}"
+                    th:value="${cheeseType}"></option>
+        </select>
+        <span th:errors="*{type}" class="error"></span>
+    </div>
+
     <input type="submit" value="Add Cheese" />
 </form>
 
