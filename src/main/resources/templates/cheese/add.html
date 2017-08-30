@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+<body class="container body-content">
 <h1 th:text="${title}">Default Title</h1>
 
 <nav th:replace="fragments :: navigation"></nav>
@@ -9,7 +9,7 @@
 <form method="post" style="max-width:600px;" th:object="${cheese}">
     <div class="form-group">
         <label th:for="name">Name</label>
-        <input class="form-control" th:field="*{name}" pattern="[A-Za-z\s]+" title="enter a name using letters and spaces only" />
+        <input class="form-control" th:field="*{name}" pattern="[A-Za-z\s]+" title="enter a name using letters and spaces only" required="required" />
         <span th:errors="*{name}" class="error"></span>
     </div>
     <div class="form-group">
