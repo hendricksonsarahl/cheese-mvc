@@ -6,13 +6,9 @@ import com.hendricksonsarahl.cheesemvc.models.CheeseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 /**
  * Created by LaunchCode
@@ -69,4 +65,33 @@ public class CheeseController {
         return "redirect:";
     }
 
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId) {
+        Cheese editCheese = CheeseData.getById(cheeseId);
+        model.addAttribute("cheese", editCheese);
+        model.addAttribute("cheeseTypes", CheeseType.values());
+
+        return "cheese/edit";
+
+    }
+    
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(Model model, @ModelAttribute @Valid Cheese editCheese, Errors errors,  @RequestParam String name, String description, CheeseType type) {
+
+        if (errors.hasErrors()){
+            model.addAttribute("title", "edit cheese");
+            model.addAttribute("cheeseTypes", CheeseType.values());
+            return "cheese/edit";
+        }
+
+        int prevId = editCheese.getCheeseId();
+        CheeseData.remove(prevId);
+        editCheese.setName(name);
+        editCheese.setDescription(description);
+        editCheese.setType(type);
+        model.addAttribute("cheese", editCheese);
+        CheeseData.add(editCheese);
+
+        return "redirect:/cheese";
+    }
 }
