@@ -1,21 +1,27 @@
 package com.hendricksonsarahl.cheesemvc.models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Cheese {
 
-    private String name;
+    @NotNull // Built in Java validation not null when we are validating
+    @Size(min=3,max =15) // This field has to be at least 3 char but no more then 15 char
+    private String name; // Validate this field
 
-    private String description;
+    @NotNull
+    @Size(min=1,message = "This field may not be empty")
+    private String description; // Validate this field
 
     private CheeseType type;
 
-    private int cheeseId;
+    public int cheeseId;
     private static int nextId = 1;
 
-    public Cheese(String name, String description, CheeseType type) {
-        this();
+    public Cheese(String name, String description) {
+        this(); //Calls the default constructor
         this.name = name;
         this.description = description;
-        this.type = type;
     }
 
     public Cheese() {
