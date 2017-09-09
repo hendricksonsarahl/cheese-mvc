@@ -30,15 +30,18 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
-        model.addAttribute(new Cheese());
+        model.addAttribute(new Cheese()); // passing this basic "skeleton" on a cheese object, can use the properties of the object to render the form
         model.addAttribute("cheeseTypes", CheeseType.values());
         return "cheese/add";
     }
 
+    // @ModelAttribute: model binding, Spring Boot framework creates object for us when it's passed through the handler method
+    // @Valid: when framework is doing this process, it needs to check that it's valid according to what is defined in the Cheese model
+    // @Errors: takes the result of @Valid and if not valid, provides error messages to show in the view
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
                                        Errors errors, Model model) {
-
+// if we find errors, go back and render the cheese/add form again (do not create new cheese object)
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
             return "cheese/add";
@@ -77,7 +80,7 @@ public class CheeseController {
     }
     
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(Model model, @ModelAttribute @Valid Cheese editCheese, Errors errors, @RequestParam String name, String description, CheeseType type) {
+    public String processEditForm(Model model, @ModelAttribute @Valid Cheese editCheese, Errors errors, @RequestParam String name, String description, CheeseType type, int rating) {
 
         if (errors.hasErrors()){
             model.addAttribute("title", "Edit Cheese " + editCheese.getName());
@@ -85,13 +88,6 @@ public class CheeseController {
             return "cheese/edit";
         }
 
-        int prevId = editCheese.getCheeseId();
-        CheeseData.remove(prevId);
-        editCheese.setName(name);
-        editCheese.setDescription(description);
-        editCheese.setType(type);
-        model.addAttribute("cheese", editCheese);
-        CheeseData.add(editCheese);
 
         return "redirect:/cheese";
     }
